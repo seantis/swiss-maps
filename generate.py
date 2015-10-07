@@ -11,14 +11,14 @@ cantons = {
     'zg', 'zh'
 }
 
-year = len(sys.argv) >= 2 and sys.argv[1] or date.today().year
+year = int(len(sys.argv) >= 2 and sys.argv[1] or date.today().year)
 
 output = Path.cwd() / 'topo'
 final = Path.cwd() / str(year)
 
 if year < 2013:
     print("Years before 2013 do not exist")
-    return
+    sys.exit(1)
 
 print("Removing existing data")
 if output.exists():
