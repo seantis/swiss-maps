@@ -21,18 +21,17 @@ if year < 2013:
     sys.exit(1)
 
 print("Removing existing data")
-if output.exists():
-    rmtree(str(output))
-
 if final.exists():
     rmtree(str(final))
 
 final.mkdir()
 
+check_call("make clean-generated", stdout=DEVNULL, stderr=DEVNULL, shell=True)
+
 print("Generating maps for {}".format(year))
 check_call(
-    ['make', 'all', 'PROPERTIES=id,name', 'YEAR={}'.format(year)],
-    stdout=DEVNULL, stderr=DEVNULL
+    "make all PROPERTIES=id,name YEAR={}".format(year),
+    stdout=DEVNULL, stderr=DEVNULL, shell=True
 )
 
 print("Organizing result")
