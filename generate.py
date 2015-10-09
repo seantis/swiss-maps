@@ -37,12 +37,8 @@ check_call(
 print("Organizing result")
 for canton in cantons:
     target = final / '{}.json'.format(canton)
-    with_lakes = output / '{}-municipalities-lakes.json'.format(canton)
+    # with_lakes = output / '{}-municipalities-lakes.json'.format(canton)
     without_lakes = output / '{}-municipalities.json'.format(canton)
-
-    if with_lakes.exists():
-        copyfile(str(with_lakes), str(target))
-    else:
-        copyfile(str(without_lakes), str(target))
+    copyfile(str(without_lakes), str(target))
 
 print("Done")
