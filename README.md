@@ -1,6 +1,6 @@
 # Swiss Municipality Maps
 
-Generate [TopoJSON](https://github.com/mbostock/topojson) maps of Swiss municipalities for  [OneGov/onegov.election_day](https://github.com/OneGov/onegov.election_day) from publicly available [swisstopo](http://www.swisstopo.admin.ch/internet/swisstopo/en/home.html) geodata.
+Generate [TopoJSON](https://github.com/mbostock/topojson) maps of Swiss municipalities for  [OneGov/onegov.election_day](https://github.com/OneGov/onegov.election_day) from publicly available [swisstopo](https://www.swisstopo.admin.ch) geodata.
 
 This repository is based of the apparently now abandonded [interactivethings/swiss-maps](https://github.com/interactivethings/swiss-maps).
 
