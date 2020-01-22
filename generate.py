@@ -26,7 +26,7 @@ if final.exists():
 
 final.mkdir()
 
-check_call("make clean-generated", stdout=DEVNULL, stderr=DEVNULL, shell=True)
+check_call("make clean", stdout=DEVNULL, stderr=DEVNULL, shell=True)
 
 print("Generating maps for {}".format(year))
 check_call(
