@@ -14,6 +14,12 @@ You also need GDAL and the corresponding python-gdal library installed. Links to
 
     brew install gdal
 
+On Ubuntu/Mint Linux run
+
+    sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
+    sudo apt-get install -y gdal-bin
+    ogr2ogr --version
+
 To get started, clone this repository and run `generate`.
 
     git clone https://github.com/interactivethings/swiss-maps.git
