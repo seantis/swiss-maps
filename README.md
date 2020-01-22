@@ -14,7 +14,7 @@ You also need GDAL and the corresponding python-gdal library installed. Links to
 
     brew install gdal
 
-On Ubuntu/Mint Linux run
+On Ubuntu/Mint Linux run the following to install `gdal`
 
     sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
     sudo apt-get install -y gdal-bin
@@ -40,3 +40,8 @@ Data source is the Swiss Federal Office of Topography, [swissBOUNDARIES3D](http:
 
 * Geodata from swisstopo is licensed under the [Licence for the free geodata of the Federal Office of Topography swisstopo](LICENSE-GEODATA)
 * Everything else: [BSD](LICENSE)
+
+### Current Development
+
+This repository will be maintained in the future. We will likely go the way to not use ESRI Shapefiles in the future anymore for obvious reasons.
+Data in the open standard OBMS is already provided by Swisstopo. For the lack of finding other libraries capable of reading Geopackages to create the desired Topojson/GeoJson from we still convert it to a shapefile.
