@@ -9,6 +9,9 @@ HEIGHT = 500
 MARGIN = 10
 SIMPLIFY = $(if $(REPROJECT),1e-9,.5)
 
+BUILD_FILE = municipalities.shp
+SOURCE_DIR = src/V200
+
 ifeq ($(shell test $(YEAR) -gt 2015; echo $$?),0)
   VEC = VECTOR200_HOHEITSGEBIET.shp
 else
@@ -29,16 +32,16 @@ clean:
 ##################################################
 # Boundaries and lakes
 ##################################################
-build/ch/municipalities.shp: src/V200/$(YEAR)/$(VEC)
+build/ch/$(BUILD_FILE): $(SOURCE_DIR)/$(YEAR)/$(VEC)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
-		ogr2ogr $(if $(REPROJECT),-t_srs EPSG:4326 -s_srs EPSG:21781) -where "CAST(BFS_NUMMER as integer(4)) > 0 AND CAST(BFS_NUMMER as integer(4)) < 9000" $@ $<; \
+		ogr2ogr $(if $(REPROJECT),-t_srs EPSG:4326 -s_srs EPSG:21781) -where "CAST(BFS_NUMMER as integer(4)) > 0 AND CAST(BFS_NUMMER as integer(4)) < 9000" -f 'ESRI Shapefile' $@ $<; \
 	else \
 		ogr2ogr $(if $(REPROJECT),-t_srs EPSG:4326 -s_srs EPSG:21781) -where "COUNTRY = 'CH'" $@ $<; \
 	fi
 
-build/zh/municipalities.shp: build/ch/municipalities.shp
+build/zh/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -47,7 +50,7 @@ build/zh/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 1 AND SEENR = 0" $@ $<; \
 	fi
 
-build/be/municipalities.shp: build/ch/municipalities.shp
+build/be/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -56,7 +59,7 @@ build/be/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 2 AND SEENR = 0" $@ $<; \
 	fi
 
-build/lu/municipalities.shp: build/ch/municipalities.shp
+build/lu/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -65,7 +68,7 @@ build/lu/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 3 AND SEENR = 0" $@ $<; \
 	fi
 
-build/ur/municipalities.shp: build/ch/municipalities.shp
+build/ur/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -74,7 +77,7 @@ build/ur/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 4 AND SEENR = 0" $@ $<; \
 	fi
 
-build/sz/municipalities.shp: build/ch/municipalities.shp
+build/sz/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -83,7 +86,7 @@ build/sz/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 5 AND SEENR = 0" $@ $<; \
 	fi
 
-build/ow/municipalities.shp: build/ch/municipalities.shp
+build/ow/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -92,7 +95,7 @@ build/ow/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 6 AND SEENR = 0" $@ $<; \
 	fi
 
-build/nw/municipalities.shp: build/ch/municipalities.shp
+build/nw/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -101,7 +104,7 @@ build/nw/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 7 AND SEENR = 0" $@ $<; \
 	fi
 
-build/gl/municipalities.shp: build/ch/municipalities.shp
+build/gl/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -110,7 +113,7 @@ build/gl/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 8 AND SEENR = 0" $@ $<; \
 	fi
 
-build/zg/municipalities.shp: build/ch/municipalities.shp
+build/zg/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -119,7 +122,7 @@ build/zg/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 9 AND SEENR = 0" $@ $<; \
 	fi
 
-build/fr/municipalities.shp: build/ch/municipalities.shp
+build/fr/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -128,7 +131,7 @@ build/fr/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 10 AND SEENR = 0" $@ $<; \
 	fi
 
-build/so/municipalities.shp: build/ch/municipalities.shp
+build/so/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -137,7 +140,7 @@ build/so/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 11 AND SEENR = 0" $@ $<; \
 	fi
 
-build/bs/municipalities.shp: build/ch/municipalities.shp
+build/bs/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -146,7 +149,7 @@ build/bs/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 12 AND SEENR = 0" $@ $<; \
 	fi
 
-build/bl/municipalities.shp: build/ch/municipalities.shp
+build/bl/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -155,7 +158,7 @@ build/bl/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 13 AND SEENR = 0" $@ $<; \
 	fi
 
-build/sh/municipalities.shp: build/ch/municipalities.shp
+build/sh/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -164,7 +167,7 @@ build/sh/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 14 AND SEENR = 0" $@ $<; \
 	fi
 
-build/ar/municipalities.shp: build/ch/municipalities.shp
+build/ar/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -173,7 +176,7 @@ build/ar/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 15 AND SEENR = 0" $@ $<; \
 	fi
 
-build/ai/municipalities.shp: build/ch/municipalities.shp
+build/ai/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -182,7 +185,7 @@ build/ai/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 16 AND SEENR = 0" $@ $<; \
 	fi
 
-build/sg/municipalities.shp: build/ch/municipalities.shp
+build/sg/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -191,7 +194,7 @@ build/sg/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 17 AND SEENR = 0" $@ $<; \
 	fi
 
-build/gr/municipalities.shp: build/ch/municipalities.shp
+build/gr/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -200,7 +203,7 @@ build/gr/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 18 AND SEENR = 0" $@ $<; \
 	fi
 
-build/ag/municipalities.shp: build/ch/municipalities.shp
+build/ag/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -209,7 +212,7 @@ build/ag/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 19 AND SEENR = 0" $@ $<; \
 	fi
 
-build/tg/municipalities.shp: build/ch/municipalities.shp
+build/tg/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -218,7 +221,7 @@ build/tg/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 20 AND SEENR = 0" $@ $<; \
 	fi
 
-build/ti/municipalities.shp: build/ch/municipalities.shp
+build/ti/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -227,7 +230,7 @@ build/ti/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 21 AND SEENR = 0" $@ $<; \
 	fi
 
-build/vd/municipalities.shp: build/ch/municipalities.shp
+build/vd/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -236,7 +239,7 @@ build/vd/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 22 AND SEENR = 0" $@ $<; \
 	fi
 
-build/vs/municipalities.shp: build/ch/municipalities.shp
+build/vs/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -245,7 +248,7 @@ build/vs/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 23 AND SEENR = 0" $@ $<; \
 	fi
 
-build/ne/municipalities.shp: build/ch/municipalities.shp
+build/ne/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -254,7 +257,7 @@ build/ne/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 24 AND SEENR = 0" $@ $<; \
 	fi
 
-build/ge/municipalities.shp: build/ch/municipalities.shp
+build/ge/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -263,7 +266,7 @@ build/ge/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 25 AND SEENR = 0" $@ $<; \
 	fi
 
-build/ju/municipalities.shp: build/ch/municipalities.shp
+build/ju/$(BUILD_FILE): build/ch/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2015 ] ; then \
@@ -272,7 +275,7 @@ build/ju/municipalities.shp: build/ch/municipalities.shp
 		ogr2ogr -where "KANTONSNR = 26 AND SEENR = 0" $@ $<; \
 	fi
 
-build/%-municipalities-unmerged.json: build/%/municipalities.shp
+build/%-municipalities-unmerged.json: build/%/$(BUILD_FILE)
 	mkdir -p $(dir $@)
 	if [ ${YEAR} -gt 2015 ] ; then \
 		node_modules/.bin/topojson \
