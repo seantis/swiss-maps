@@ -37,7 +37,7 @@ Run `generate` directly to create all municipalities and rename the files:
 
     ./generate 2018
 
-## NEW: Create municipalities json files
+## Create municipalities json files
 
 This is related to [seantis/swiss-municipalities](https://github.com/seantis/swiss-municipalities). 
 For the sake of consistency, we can generate the same files out of the geodata 

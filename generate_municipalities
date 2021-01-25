@@ -9,7 +9,7 @@ from tempfile import TemporaryDirectory
 import fiona
 
 
-year = sys.argv[1] or date.today().year
+year = len(sys.argv) > 1 and sys.argv[1] or date.today().year
 try:
     year = int(sys.argv[1])
 except IndexError:
@@ -75,6 +75,12 @@ def year_warning(entry):
     assert not updated > year, f"You are using a dataset newer than {year}"
 
 
+def is_lake(entry):
+    if prop(entry, 'SEE_FLAECHE') == prop(entry, 'GEM_FLAECHE'):
+        return True
+    return False
+
+
 def convert_to_gpkg(src, dest, show_info=False):
     assert os.path.exists(src)
 
@@ -107,6 +113,7 @@ def convert_to_gpkg(src, dest, show_info=False):
 cantons = {}
 districts = {}
 municipalities = {}
+exclude_lakes = True
 
 with TemporaryDirectory() as tmpdir:
     outfile = f'{tmpdir}/out.gpkg'
@@ -122,11 +129,13 @@ with TemporaryDirectory() as tmpdir:
         return entry['properties'][KTNR]
 
     with fiona.open(outfile, layer=MUNICIPALITIES) as src:
+        cantons = set(groupkey(e) for e in src)
+        assert len(cantons) == 26
         for nr, entries in groupby(src, groupkey):
             for entry in entries:
-                bez_nr = prop(entry, BEZNR)
-                if not bez_nr:
+                if exclude_lakes and is_lake(entry):
                     continue
+                bez_nr = prop(entry, BEZNR)
                 year_warning(entry)
                 by_canton = municipalities.setdefault(
                     CANTONS_ABBREV[prop(entry, KTNR)].lower(), {}
@@ -134,7 +143,7 @@ with TemporaryDirectory() as tmpdir:
                 by_canton[prop(entry, BFS_NR)] = {
                     'name': prop(entry, 'NAME'),
                     'district': districts[bez_nr]
-                }
+                } if bez_nr else {'name': prop(entry, 'NAME')}
 
 # write json files
 json_dir = f'{root}/municipalities'
