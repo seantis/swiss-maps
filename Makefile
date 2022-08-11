@@ -24,6 +24,11 @@ ifeq ($(shell test $(YEAR) -gt 2019; echo $$?),0)
 	# BUILD_FILE = swiss_boundaries.gpkg
 endif
 
+ifeq ($(shell test $(YEAR) -gt 2021; echo $$?),0)
+	VEC = swissBOUNDARIES3D_1_3_LV95_LN02.gdb
+	SOURCE_DIR = src/swissBOUNDARIES3D
+endif
+
 all: node_modules \
 	$(addprefix topo/,$(addsuffix -municipalities.json,$(CANTONS)))
 
