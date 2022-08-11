@@ -42,7 +42,7 @@ build/ch/$(BUILD_FILE): $(SOURCE_DIR)/$(YEAR)/$(VEC)
 	mkdir -p $(dir $@)
 	rm -f $@
 	if [ ${YEAR} -gt 2019 ] ; then \
-		ogr2ogr $(if $(REPROJECT),-t_srs EPSG:4326 -s_srs EPSG:21781) -sql "select * from TLM_HOHEITSGEBIET where ICC = 'CH'" -f 'ESRI Shapefile' $@ $<; \
+		ogr2ogr $(if $(REPROJECT),-t_srs EPSG:4326 -s_srs EPSG:21781) -sql "select * from TLM_HOHEITSGEBIET where ICC = 'CH' and BFS_NUMMER < 9000" -f 'ESRI Shapefile' $@ $<; \
 	elif [ ${YEAR} -gt 2015 ] ; then \
 		ogr2ogr $(if $(REPROJECT),-t_srs EPSG:4326 -s_srs EPSG:21781) -where "CAST(BFS_NUMMER as integer(4)) > 0 AND CAST(BFS_NUMMER as integer(4)) < 9000" -f 'ESRI Shapefile' $@ $<; \
 	else \
