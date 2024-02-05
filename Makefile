@@ -29,6 +29,11 @@ ifeq ($(shell test $(YEAR) -gt 2021; echo $$?),0)
 	SOURCE_DIR = src/swissBOUNDARIES3D
 endif
 
+ifeq ($(shell test $(YEAR) -gt 2023; echo $$?),0)
+	VEC = swissBOUNDARIES3D_1_5_LV95_LN02.gdb
+	SOURCE_DIR = src/swissBOUNDARIES3D
+endif
+
 all: node_modules \
 	$(addprefix topo/,$(addsuffix -municipalities.json,$(CANTONS)))
 
